@@ -8,7 +8,7 @@ const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
 const key = new TextEncoder().encode(secretKey);
 
 const refreshTokenKey = process.env.REFRESH_TOKEN_SECRET;
-const refreshKey = new TextEncoder().encode(refreshTokenKey);
+// const refreshKey = new TextEncoder().encode(refreshTokenKey);
 
 export async function encrypt(payload: SessionPayload) {
   return new SignJWT(payload)

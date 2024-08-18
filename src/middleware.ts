@@ -9,24 +9,24 @@ const protectedRoutes = ["/"];
 export default async function middleware(request: NextRequest) {
   // 1.Get session or token from cookie storage
   const token = cookies().get("sessions")?.value;
-  const refreshToken = cookies().get("refreshToken")?.value;
 
   // 2. Check if the current route is protected or public
   const path = request.nextUrl.pathname;
   const isProtectedRoute = protectedRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
-  const accessToken = request.cookies.get("accessToken")?.value;
+  // const accessToken = request.cookies.get("accessToken")?.value;
 
   // 3. decoded token
   const payload = await decrypt(token);
 
   // Authentication Middleware
-  if (isProtectedRoute && !accessToken) {
+  if (isProtectedRoute && !payload?.userId) {
     const response = NextResponse.redirect(new URL("/login", request.url));
+    response.cookies.delete("sessions");
     return response;
   }
 
-  if (isPublicRoute && accessToken) {
+  if (payload?.userId && isPublicRoute) {
     return NextResponse.redirect(new URL("/", request.url));
   }
   return NextResponse.next();

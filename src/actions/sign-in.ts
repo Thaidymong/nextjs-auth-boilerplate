@@ -37,9 +37,10 @@ export const signin = async (input: { email: string; password: string }) => {
     cookies().set("sessions", data?.login?.accessToken, {
       httpOnly: true,
     });
-    cookies().set("refreshToken", data?.login?.refreshToken, {
-      httpOnly: true,
-    });
+
+    // cookies().set("refreshToken", data?.login?.refreshToken, {
+    //   httpOnly: true,
+    // });
 
     return {
       data: data?.login,
