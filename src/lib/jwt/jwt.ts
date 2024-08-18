@@ -1,4 +1,4 @@
-// import { getMe } from "@/actions/get-me";
+import { getMe } from "@/actions/get-me";
 import { SessionPayload } from "@/types/session-payload";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
@@ -8,7 +8,7 @@ const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
 const key = new TextEncoder().encode(secretKey);
 
 const refreshTokenKey = process.env.REFRESH_TOKEN_SECRET;
-// const refreshKey = new TextEncoder().encode(refreshTokenKey);
+const refreshKey = new TextEncoder().encode(refreshTokenKey);
 
 export async function encrypt(payload: SessionPayload) {
   return new SignJWT(payload)
@@ -28,32 +28,32 @@ export async function decrypt(session: string | undefined = "") {
     return null;
   }
 }
-// export async function refreshdecrypt(refreshToken: string | undefined = "") {
-//   try {
-//     const { payload } = await jwtVerify<SessionPayload>(
-//       refreshToken,
-//       refreshKey,
-//       {
-//         algorithms: ["HS256"],
-//       }
-//     );
-//     return payload;
-//   } catch (error) {
-//     return null;
-//   }
-// }
+export async function refreshdecrypt(refreshToken: string | undefined = "") {
+  try {
+    const { payload } = await jwtVerify<SessionPayload>(
+      refreshToken,
+      refreshKey,
+      {
+        algorithms: ["HS256"],
+      }
+    );
+    return payload;
+  } catch (error) {
+    return null;
+  }
+}
 
-// export async function verifySession() {
-//   const token = cookies().get("sessions")?.value;
-//   const payload = await decrypt(token);
+export async function verifySession() {
+  const token = cookies().get("sessions")?.value;
+  const payload = await decrypt(token);
 
-//   const { me, error } = await getMe();
+  const { me, error } = await getMe();
 
-//   if (error && !payload?.userId) {
-//     redirect("/sign-in");
-//   }
+  if (error && !payload?.userId) {
+    redirect("/sign-in");
+  }
 
-//   return {
-//     me,
-//   };
-// }
+  return {
+    me,
+  };
+}

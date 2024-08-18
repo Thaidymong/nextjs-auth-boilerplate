@@ -4,8 +4,9 @@ import "./../globals.css";
 import { Toaster } from "sonner";
 import AppLayout from "@/components/Layout/Layout";
 import { ApolloWraper } from "@/lib/apollo";
-// import AppInitializer from "@/store/AppInitializer";
-// import { verifySession } from "@/lib/jwt/jwt";
+import { verifySession } from "@/lib/jwt/jwt";
+import AppInitializer from "@/store/AppInitializer";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -18,15 +19,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const { me } = await verifySession()
+  const { me } = await verifySession();
   return (
     <html lang="en">
       <ApolloWraper>
         <Toaster richColors />
         <body className={inter.className}>
-          {/* <AppInitializer me={me}> */}
-          <AppLayout>{children}</AppLayout>
-          {/* </AppInitializer> */}
+          <AppInitializer me={me}>
+            <AppLayout>{children}</AppLayout>
+          </AppInitializer>
         </body>
       </ApolloWraper>
     </html>

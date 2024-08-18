@@ -1,9 +1,8 @@
-import LoginScreen from "@/screen/Login/LoginScreen";
+import SignUpScreen from "@/screen/SingUp/SignUpScreen";
 import React from "react";
 
 const SignUpPage = () => {
-  // return <LoginScreen />;
-  return <>Sign up</>;
+  return <SignUpScreen />;
 };
 
 export default SignUpPage;

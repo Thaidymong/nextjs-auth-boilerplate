@@ -10,17 +10,15 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "sonner";
 import { registerSchema } from "../zod/zod";
-import { signin } from "@/actions/sign-in";
 import { z } from "zod";
-
+import { signup } from "@/actions/sign-up";
 // Define the form data type
 type FormData = z.infer<typeof registerSchema>;
 
-export const LoginForm = () => {
+export const SignUpForm = () => {
   const [pending, startTrasition] = useTransition();
-  const [isChecked, setIsChecked] = useState(false);
   const router = useRouter();
-
+  const [isChecked, setIsChecked] = useState(false);
   const {
     register,
     handleSubmit,
@@ -34,9 +32,9 @@ export const LoginForm = () => {
     setIsChecked(!isChecked);
   };
 
-  const onSubmit: SubmitHandler<FormData> = (input) => {
+  const onSubmit: SubmitHandler<FormData> = async (input) => {
     startTrasition(async () => {
-      const { data, error } = await signin(input);
+      const { data, error } = await signup(input);
 
       if (error) {
         toast.error(error, {
@@ -45,14 +43,14 @@ export const LoginForm = () => {
             fontSize: "11pt",
           },
         });
-      } else if (data?.accessToken) {
+      } else if (data) {
         toast.success("Signin successfully", {
           position: "top-right",
           style: {
             fontSize: "11pt",
           },
         });
-        router.push("/");
+        router.push("/sign-in");
       }
     });
   };
@@ -66,7 +64,7 @@ export const LoginForm = () => {
               <div className="bg-white dark:bg-slate-900 rounded-md shadow dark:shadow-gray-700 p-6">
                 <form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="pb-10 pt-10 pr-5 pl-5"
+                  className="pb-10 pt-5 pr-5 pl-5"
                 >
                   <div
                     className="absolute bg-sky-700 py-[1px] px-3 rounded-sm cursor-pointer"
@@ -89,10 +87,40 @@ export const LoginForm = () => {
 
                   <div className="grid grid-cols-1 text-center">
                     <h3 className="font-semibold text-2xl leading-normal mb-4">
-                      Authentication
+                      Create new account
                     </h3>
                   </div>
                   <div className="grid lg:grid-cols-12 grid-cols-1 gap-3">
+                    <div className="lg:col-span-6">
+                      <label htmlFor="lastName" className="font-semibold">
+                        Firstname
+                      </label>
+                      <input
+                        {...register("first_name")}
+                        className={` mt-2 w-full py-2 px-3 h-10 bg-transparent rounded outline-none border focus:ring-0 ${
+                          errors.first_name && "border-1 border-red-500 "
+                        }`}
+                        placeholder="firstname"
+                      />
+                      {errors.first_name && (
+                        <p className="text-red-500">{`${errors.first_name.message}`}</p>
+                      )}
+                    </div>
+                    <div className="lg:col-span-6">
+                      <label htmlFor="lastName" className="font-semibold">
+                        Lastname
+                      </label>
+                      <input
+                        {...register("last_name")}
+                        className={` mt-2 w-full py-2 px-3 h-10 bg-transparent rounded outline-none border focus:ring-0 ${
+                          errors.last_name && "border-1 border-red-500 "
+                        }`}
+                        placeholder="lastname"
+                      />
+                      {errors.last_name && (
+                        <p className="text-red-500">{`${errors.last_name.message}`}</p>
+                      )}
+                    </div>
                     <div className="lg:col-span-12">
                       <label htmlFor="email" className="font-semibold">
                         Email
@@ -125,6 +153,25 @@ export const LoginForm = () => {
                         <p className="text-red-500 ">{`${errors.password.message}`}</p>
                       )}
                     </div>
+                    <div className="lg:col-span-12">
+                      <label
+                        htmlFor="ComfirmPassword"
+                        className="font-semibold"
+                      >
+                        Comfirm Password
+                      </label>
+                      <input
+                        type={isChecked ? "" : "password"}
+                        {...register("confirmPassword")}
+                        className={`  mt-2 w-full py-2 px-3 h-10 bg-transparent rounded outline-none border focus:ring-0 ${
+                          errors.confirmPassword && "border-1 border-red-500 "
+                        }`}
+                        placeholder="comfirm password"
+                      />
+                      {errors.confirmPassword && (
+                        <p className="text-red-500 ">{`${errors.confirmPassword.message}`}</p>
+                      )}
+                    </div>
                   </div>
                   <div className="w-full mt-3 ">
                     <Checkbox id="terms" onClick={handleCheckboxClick} />
@@ -148,16 +195,16 @@ export const LoginForm = () => {
                           Loading...
                         </>
                       ) : (
-                        "Login"
+                        "Sign Up"
                       )}
                     </button>
                     <div className="mt-5 flex justify-center">
-                      <div>Don't have an account?</div>
+                      <div>Already Sign Up?</div>
                       <div
                         className="cursor-pointer text-blue-400 ml-1"
-                        onClick={() => router.push("/sign-up")}
+                        onClick={() => router.push("/login")}
                       >
-                        Create new
+                        Sign In
                       </div>
                     </div>
                   </div>

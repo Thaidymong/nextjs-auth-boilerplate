@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useTransition } from "react";
 import { Link as LinkScroll } from "react-scroll";
 import Image from "next/image";
-// import { useStore } from "@/store";
-// import { signout } from "@/actions/sign-out";
 import { ClipLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,18 +13,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogOut } from "lucide-react";
+import { useStore } from "@/store";
+import { signout } from "@/actions/sign-out";
 
 const AppNavbar: React.FC = () => {
   const [activeLink, setActiveLink] = useState<string | null>(null);
   const [scrollActive, setScrollActive] = useState(false);
   const [pending, startTrasition] = useTransition();
-  // const { me } = useStore();
+  const { me } = useStore();
   const router = useRouter();
+  console.log({ me });
 
-  // const handleSignOut = () => {
-  //   startTrasition(async () => await signout());
-  //   router.push("/sign-in");
-  // };
+  const handleSignOut = () => {
+    startTrasition(async () => await signout());
+    router.push("/login");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,27 +59,6 @@ const AppNavbar: React.FC = () => {
               className="h-16 w-16"
             />
           </div>
-          {/* <ul className="hidden lg:flex col-start-4 col-end-8 text-black-500  items-center">
-            <LinkScroll
-              activeClass="active"
-              to="testimoni"
-              spy={true}
-              smooth={true}
-              duration={1000}
-              onSetActive={() => {
-                setActiveLink("testimoni");
-              }}
-              className={
-                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
-                (activeLink === "testimoni"
-                  ? " text-red-500 animation-active "
-                  : " text-black-500 hover:text-red-500 ")
-              }
-            >
-              Home
-            </LinkScroll>
-          </ul> */}
-
           <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
             {/* {me ? (
               <>
@@ -138,7 +118,10 @@ const AppNavbar: React.FC = () => {
                   {/* <DropdownMenuLabel>{me?.email}</DropdownMenuLabel> */}
                   <DropdownMenuLabel>dymongthai@gmail.com</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuCheckboxItem className="cursor-pointer">
+                  <DropdownMenuCheckboxItem
+                    className="cursor-pointer"
+                    onClick={handleSignOut}
+                  >
                     <LogOut size={18} className="mr-2" />
                     <button disabled={pending}>
                       {pending ? (
@@ -151,7 +134,7 @@ const AppNavbar: React.FC = () => {
                           Loading...
                         </>
                       ) : (
-                        "Logout"
+                        "Sign Out"
                       )}
                     </button>
                   </DropdownMenuCheckboxItem>

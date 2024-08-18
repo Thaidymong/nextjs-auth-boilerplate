@@ -3,25 +3,36 @@
 import client from "@/lib/apollo/apollo-server";
 import { ErrorResponse } from "@/types/error-response";
 import { gql } from "@apollo/client";
-import { cookies } from "next/headers";
 
-const LOGIN_MUTATION = gql`
-  mutation Mutation($input: LoginDto!) {
-    login(input: $input) {
-      accessToken
-      refreshToken
+const SIGN_UP_MUTATION = gql`
+  mutation Mutation($input: CreateUserDto!) {
+    create(input: $input) {
+      data {
+        id
+        first_name
+        last_name
+        email
+        password
+      }
     }
   }
 `;
 
-export const signin = async (input: { email: string; password: string }) => {
+export const signup = async (input: {
+  email: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+}) => {
   try {
     const { data, errors } = await client.mutate({
-      mutation: LOGIN_MUTATION,
+      mutation: SIGN_UP_MUTATION,
       variables: {
         input: {
           email: input.email,
           password: input.password,
+          first_name: input.first_name,
+          last_name: input.last_name,
         },
       },
     });
@@ -34,16 +45,8 @@ export const signin = async (input: { email: string; password: string }) => {
       };
     }
 
-    cookies().set("sessions", data?.login?.accessToken, {
-      httpOnly: true,
-    });
-
-    cookies().set("refreshToken", data?.login?.refreshToken, {
-      httpOnly: true,
-    });
-
     return {
-      data: data?.login,
+      data: data?.create,
       error: null,
     };
   } catch (error: any) {
