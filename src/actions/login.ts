@@ -14,7 +14,7 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-export const signin = async (input: { email: string; password: string }) => {
+export const login = async (input: { email: string; password: string }) => {
   try {
     const { data, errors } = await client.mutate({
       mutation: LOGIN_MUTATION,

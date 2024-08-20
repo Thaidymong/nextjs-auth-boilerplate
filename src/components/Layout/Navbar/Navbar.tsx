@@ -22,7 +22,6 @@ const AppNavbar: React.FC = () => {
   const [pending, startTrasition] = useTransition();
   const { me } = useStore();
   const router = useRouter();
-  console.log({ me });
 
   const handleSignOut = () => {
     startTrasition(async () => await signout());
@@ -60,34 +59,33 @@ const AppNavbar: React.FC = () => {
             />
           </div>
           <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
-            {/* {me ? (
+            {me ? (
               <>
                 <DropdownMenu modal={false}>
                   <DropdownMenuTrigger asChild>
                     <Avatar className="cursor-pointer">
                       <AvatarImage
-                        src="https://github.com/shadcn.png"
+                        src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
                         alt="@shadcn"
                       />
-                      <AvatarFallback>LH</AvatarFallback>
+                      <AvatarFallback>TH</AvatarFallback>
                     </Avatar>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56" align="end">
+                    <DropdownMenuLabel>
+                      {me?.last_name} {me?.first_name}
+                    </DropdownMenuLabel>
                     <DropdownMenuLabel>{me?.email}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuCheckboxItem
                       onClick={handleSignOut}
                       className="cursor-pointer"
                     >
-                      <LogOut size={18} className="mr-2" />
+                      <LogOut size={18} />
                       <button disabled={pending}>
                         {pending ? (
                           <>
-                            <ClipLoader
-                              color="black"
-                              className="mr-1"
-                              size={20}
-                            />
+                            <ClipLoader color="black" className="" size={20} />
                             Loading...
                           </>
                         ) : (
@@ -99,48 +97,8 @@ const AppNavbar: React.FC = () => {
                 </DropdownMenu>
               </>
             ) : (
-              <>
-               
-              </>
-            )} */}
-            <>
-              <DropdownMenu modal={false}>
-                <DropdownMenuTrigger asChild>
-                  <Avatar className="cursor-pointer">
-                    <AvatarImage
-                      src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fsurgassociates.com%2Four-physicians%2Fchristian-carr%2F610-6104451_image-placeholder-png-user-profile-placeholder-image-png-2%2F&psig=AOvVaw14TadopDO-lo1gguspQFMX&ust=1723711149224000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMDogsiK9IcDFQAAAAAdAAAAABAE"
-                      alt="@shadcn"
-                    />
-                    <AvatarFallback>TD</AvatarFallback>
-                  </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end">
-                  {/* <DropdownMenuLabel>{me?.email}</DropdownMenuLabel> */}
-                  <DropdownMenuLabel>dymongthai@gmail.com</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuCheckboxItem
-                    className="cursor-pointer"
-                    onClick={handleSignOut}
-                  >
-                    <LogOut size={18} className="mr-2" />
-                    <button disabled={pending}>
-                      {pending ? (
-                        <>
-                          <ClipLoader
-                            color="black"
-                            className="mr-1"
-                            size={20}
-                          />
-                          Loading...
-                        </>
-                      ) : (
-                        "Sign Out"
-                      )}
-                    </button>
-                  </DropdownMenuCheckboxItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </>
+              <></>
+            )}
           </div>
         </nav>
       </header>

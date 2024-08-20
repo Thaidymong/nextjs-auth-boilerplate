@@ -50,7 +50,7 @@ export async function verifySession() {
   const { me, error } = await getMe();
 
   if (error && !payload?.userId) {
-    redirect("/sign-in");
+    redirect("/login");
   }
 
   return {

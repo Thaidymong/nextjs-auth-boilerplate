@@ -10,8 +10,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "sonner";
 import { registerSchema } from "../zod/zod";
-import { signin } from "@/actions/sign-in";
 import { z } from "zod";
+import { login } from "@/actions/login";
 
 // Define the form data type
 type FormData = z.infer<typeof registerSchema>;
@@ -36,7 +36,7 @@ export const LoginForm = () => {
 
   const onSubmit: SubmitHandler<FormData> = (input) => {
     startTrasition(async () => {
-      const { data, error } = await signin(input);
+      const { data, error } = await login(input);
 
       if (error) {
         toast.error(error, {

@@ -32,7 +32,7 @@ export const getMe = async (): Promise<{
     }
 
     return {
-      me: data?.getMe,
+      me: data?.me,
       error: null,
     };
   } catch (error: any) {

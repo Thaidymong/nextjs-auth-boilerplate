@@ -15,7 +15,7 @@ export default function AppLayout({ children }: PropsWithChildren) {
   let Navbar: any = AppNavbar;
   // let Footer: any = AppFooter;
 
-  if (pathname?.includes("/sign-in") || pathname?.includes("/sign-up")) {
+  if (pathname?.includes("/login") || pathname?.includes("/sign-up")) {
     Navbar = Empty;
   }
 

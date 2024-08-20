@@ -50,7 +50,7 @@ export const SignUpForm = () => {
             fontSize: "11pt",
           },
         });
-        router.push("/sign-in");
+        router.push("/login");
       }
     });
   };
