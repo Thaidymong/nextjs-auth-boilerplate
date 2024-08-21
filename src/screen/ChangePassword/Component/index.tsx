@@ -67,7 +67,7 @@ export default function ChangePasswordComponent() {
                             <h3 className="font-bold text-4xl leading-normal mb-4">
                                 Welcome Back
                             </h3>
-                            <p className="font-normal w-100 text-base leading-normal mb-4">Users can navigate to the "Edite Profile" page from their account settings or profile section.</p>
+                            <p className="font-normal w-100 text-base leading-normal mb-4">Users can navigate to the &quot;Edite Profile&quot; page from their account settings or profile section.</p>
                             <p className="font-normal w-100 text-base leading-normal mb-4">
                                 Users must enter their edit to verify their identity.
                             </p>
