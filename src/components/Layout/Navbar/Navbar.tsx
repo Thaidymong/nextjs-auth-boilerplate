@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect, useTransition } from "react";
 import { Link as LinkScroll } from "react-scroll";
 import Image from "next/image";
@@ -8,11 +10,10 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut } from "lucide-react";
+import { LockKeyhole, LogOut, Mail, UserRoundCog, UserRoundPen } from "lucide-react";
 import { useStore } from "@/store";
 import { signout } from "@/actions/sign-out";
 
@@ -71,17 +72,37 @@ const AppNavbar: React.FC = () => {
                       <AvatarFallback>TH</AvatarFallback>
                     </Avatar>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56" align="end">
-                    <DropdownMenuLabel>
+                  <DropdownMenuContent className="w-auto pr-3" align="end">
+                    <DropdownMenuCheckboxItem>
+                      <UserRoundCog size={18} />&nbsp; 
                       {me?.last_name} {me?.first_name}
-                    </DropdownMenuLabel>
-                    <DropdownMenuLabel>{me?.email}</DropdownMenuLabel>
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem>
+                      <Mail size={18} />&nbsp;
+                      {me?.email}
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem>
+                      <div
+                        onClick={() => router.push(`/edit-profile/${me.id}`)}
+                      >
+                        <div className="flex"><UserRoundPen size={18} />&nbsp; Edit Profile</div>
+                      </div>
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem>
+                      <div
+                        onClick={() => router.push(`/change-password/${me.id}`)}
+                      >
+                        <div className="flex">
+                          <LockKeyhole size={18} />
+                          &nbsp; Change Password</div>
+                      </div>
+                    </DropdownMenuCheckboxItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuCheckboxItem
                       onClick={handleSignOut}
                       className="cursor-pointer"
                     >
-                      <LogOut size={18} />
+                      <LogOut size={18} />&nbsp; 
                       <button disabled={pending}>
                         {pending ? (
                           <>
