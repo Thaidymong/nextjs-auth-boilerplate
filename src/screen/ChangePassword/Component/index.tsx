@@ -176,7 +176,7 @@ export default function ChangePasswordComponent() {
                                         </button>
                                         <div className="mt-5 flex justify-center">
                                             <div>
-                                                Don't have an account?
+                                                Do not have an account?
                                             </div>
                                             <div className="cursor-pointer text-blue-400 ml-1" onClick={() => router.push("/sign-up")}>
                                                 Sign Up
